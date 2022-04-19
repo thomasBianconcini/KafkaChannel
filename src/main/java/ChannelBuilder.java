@@ -1,5 +1,4 @@
 import java.io.IOException;
-import java.net.InetAddress;
 import java.nio.channels.SelectionKey;
 import java.util.Map;
 
@@ -9,7 +8,6 @@ import org.apache.kafka.common.network.ChannelMetadataRegistry;
 import org.apache.kafka.common.network.ListenerName;
 import org.apache.kafka.common.network.PlaintextTransportLayer;
 import org.apache.kafka.common.network.TransportLayer;
-import org.apache.kafka.common.security.auth.KafkaPrincipal;
 
 public class ChannelBuilder implements ChannelBuilderInterface  {
     private final ListenerName listenerName;
@@ -18,11 +16,10 @@ public class ChannelBuilder implements ChannelBuilderInterface  {
         this.listenerName = listenerName;
     }
     @Override
-    public KafkaChannel buildChannel(String id, SelectionKey key, int maxReceiveSize, MemoryPool memoryPool, ChannelMetadataRegistry metadataRegistry) throws KafkaException, IOException {
+    public MyKafkaChannel buildChannel(String id, SelectionKey key, int maxReceiveSize, MemoryPool memoryPool, ChannelMetadataRegistry metadataRegistry) throws KafkaException, IOException {
         try {
             PlaintextTransportLayer transportLayer = buildTransportLayer(key);
-            return buildChannel(id, transportLayer, maxReceiveSize,
-                    memoryPool != null ? memoryPool : MemoryPool.NONE, metadataRegistry);
+            return buildChannel(id, transportLayer, maxReceiveSize, memoryPool != null ? memoryPool : MemoryPool.NONE, metadataRegistry);
         } catch (Exception e) {
             throw new KafkaException(e);
         }
@@ -30,8 +27,8 @@ public class ChannelBuilder implements ChannelBuilderInterface  {
     protected PlaintextTransportLayer buildTransportLayer(SelectionKey key) throws IOException {
         return new PlaintextTransportLayer(key);
     }
-    KafkaChannel buildChannel(String id, TransportLayer transportLayer, int maxReceiveSize, MemoryPool memoryPool, ChannelMetadataRegistry metadataRegistry) {
-        return new KafkaChannel(id, transportLayer, maxReceiveSize, memoryPool, metadataRegistry);
+    MyKafkaChannel buildChannel(String id, TransportLayer transportLayer, int maxReceiveSize, MemoryPool memoryPool, ChannelMetadataRegistry metadataRegistry) {
+        return new MyKafkaChannel(id, transportLayer, maxReceiveSize, memoryPool, metadataRegistry);
     }
     @Override
     public void close() {

@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/KafkaChannel.iml" filepath="$PROJECT_DIR$/.idea/KafkaChannel.iml" />
       <module fileurl="file://$PROJECT_DIR$/src/main.iml" filepath="$PROJECT_DIR$/src/main.iml" />
-      <module fileurl="file://$PROJECT_DIR$/src/src.iml" filepath="$PROJECT_DIR$/src/src.iml" />
     </modules>
   </component>
 </project>

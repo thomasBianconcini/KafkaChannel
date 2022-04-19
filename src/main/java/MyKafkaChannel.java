@@ -1,4 +1,3 @@
-import org.apache.kafka.common.*;
 import org.apache.kafka.common.errors.AuthenticationException;
 import org.apache.kafka.common.memory.MemoryPool;
 import org.apache.kafka.common.network.*;
@@ -10,10 +9,8 @@ import java.net.Socket;
 import java.net.SocketAddress;
 import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
-import java.util.Optional;
-import java.util.function.Supplier;
 
-public class KafkaChannel implements AutoCloseable{
+public class MyKafkaChannel implements AutoCloseable{
     private static final long MIN_REAUTH_INTERVAL_ONE_SECOND_NANOS = 1000 * 1000 * 1000;
     private final String id;
     private final TransportLayer transportLayer;
@@ -41,7 +38,7 @@ public class KafkaChannel implements AutoCloseable{
         THROTTLE_STARTED,
         THROTTLE_ENDED
     }
-    public KafkaChannel(String id, TransportLayer transportLayer, int maxReceiveSize,MemoryPool memoryPool, ChannelMetadataRegistry metadataRegistry)
+    public MyKafkaChannel(String id, TransportLayer transportLayer, int maxReceiveSize,MemoryPool memoryPool, ChannelMetadataRegistry metadataRegistry)
     {
         this.id = id;
         this.transportLayer = transportLayer;
@@ -103,7 +100,7 @@ public class KafkaChannel implements AutoCloseable{
     public ChannelState state() {
         return this.state;
     }
-public boolean finishConnect() throws IOException {
+    public boolean finishConnect() throws IOException {
         SocketChannel socketChannel= transportLayer.socketChannel();
         if(socketChannel !=null)
         {
@@ -125,7 +122,7 @@ public boolean finishConnect() throws IOException {
         }
         return connected;
 
-}
+    }
     public boolean isConnected() {
         return transportLayer.isConnected();
     }
@@ -286,7 +283,7 @@ public boolean finishConnect() throws IOException {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        KafkaChannel that = (KafkaChannel) o;
+        MyKafkaChannel that = (MyKafkaChannel) o;
         return id.equals(that.id);
     }
 
